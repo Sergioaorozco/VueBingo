@@ -53,7 +53,7 @@ export default {
       if (this.defNumber === number) {
         this.selectedTags.push(number)
       } else {
-        console.log('error')
+        console.log('this number already exists.')
       }
     },
 
