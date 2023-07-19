@@ -17,7 +17,7 @@ export default {
   methods: {
     randomCalc(steps) {
       let item = Math.random() * steps;
-        return Math.floor(item) + 1
+      return Math.floor(item) + 1
     },
 
     startBingo() {
@@ -44,7 +44,7 @@ export default {
     },
 
     isNumberSelected(number) {
-      if(this.defNumber = number) {
+      if (this.defNumber = number) {
         this.selectedTags.push(number)
       }
     },
@@ -74,27 +74,32 @@ export default {
           Números</button>
       </section>
       <section class="mt-10">
-        <div class="flex flex-col board">
-          <ul>
+        <div class="board">
+          <ul class="flex flex-row md:flex-col">
             <li>
               <p class="key">B</p>
-              <p v-for="numbers in BingoInformation.B" :class="{selected : isBoardSelected(numbers)}" class="numbers">{{ numbers }}</p>
+              <p v-for="numbers in BingoInformation.B" :class="{ selected: isBoardSelected(numbers) }" class="numbers">
+                {{ numbers }}</p>
             </li>
             <li>
               <p class="key">I</p>
-              <p v-for="numbers in BingoInformation.I" :class="{selected : isBoardSelected(numbers)}" class="numbers">{{ numbers }}</p>
+              <p v-for="numbers in BingoInformation.I" :class="{ selected: isBoardSelected(numbers) }" class="numbers">
+                {{ numbers }}</p>
             </li>
             <li>
               <p class="key">N</p>
-              <p v-for="numbers in BingoInformation.N" :class="{selected : isBoardSelected(numbers)}" class="numbers">{{ numbers }}</p>
+              <p v-for="numbers in BingoInformation.N" :class="{ selected: isBoardSelected(numbers) }" class="numbers">
+                {{ numbers }}</p>
             </li>
             <li>
               <p class="key">G</p>
-              <p v-for="numbers in BingoInformation.G" :class="{selected : isBoardSelected(numbers)}" class="numbers">{{ numbers }}</p>
+              <p v-for="numbers in BingoInformation.G" :class="{ selected: isBoardSelected(numbers) }" class="numbers">
+                {{ numbers }}</p>
             </li>
             <li>
               <p class="key">O</p>
-              <p v-for="numbers in BingoInformation.O" :class="{selected : isBoardSelected(numbers)}" class="numbers">{{ numbers }}</p>
+              <p v-for="numbers in BingoInformation.O" :class="{ selected: isBoardSelected(numbers) }" class="numbers">
+                {{ numbers }}</p>
             </li>
           </ul>
         </div>
@@ -109,6 +114,7 @@ export default {
   color: black;
   font-weight: 600;
 }
+
 .board {
   // clip: auto;
   border: 1px solid black;
@@ -167,5 +173,11 @@ export default {
     padding-inline: 15px;
     height: 100px;
     width: 100px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .board li {
+    flex-direction: column;
   }
 }</style>

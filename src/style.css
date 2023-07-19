@@ -17,6 +17,7 @@
 .wrapper {
   margin: 0 auto;
   max-inline-size: 900px;
+  padding-bottom: 30px;
   padding-inline: 15px;
 }
 
