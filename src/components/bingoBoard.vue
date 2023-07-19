@@ -107,6 +107,7 @@ export default {
 .selected {
   background-color: rgb(245, 188, 66) !important;
   color: black;
+  font-weight: 600;
 }
 .board {
   // clip: auto;
