@@ -61,7 +61,7 @@ export default {
 <template>
   <div class="wrapper flex flex-col justify-between gap-y-10">
     <section class="mt-12">
-      <h1 class="text-center text-slate-300 text-7xl font-bold">Vingo</h1>
+      <h1 class="text-center text-slate-300 text-5xl font-bold">Bingo Vue</h1>
     </section>
     <main>
       <section class="flex flex-col gap-y-8 letters">
