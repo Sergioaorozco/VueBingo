@@ -14,6 +14,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
+<<<<<<< HEAD
 .wrapper {
   margin: 0 auto;
   max-inline-size: 900px;
@@ -25,3 +26,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.wrapper {
+  max-inline-size: 900px;
+  padding-inline: 15px;
+  margin: 0 auto;
+}
+>>>>>>> b407548... Add Bingo functionality
