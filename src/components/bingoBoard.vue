@@ -4,6 +4,7 @@ export default {
     return {
       defLetter: 'B',
       defNumber: '0',
+      newNumber: null,
       selectedTags: [],
       BingoInformation: {
         "B": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
@@ -19,14 +20,20 @@ export default {
       let item = Math.random() * steps;
       return Math.floor(item) + 1
     },
-
+    randomLetter() {
+      let keys = Object.keys(this.BingoInformation);
+      let randomKeyIndex = Math.floor(Math.random() * keys.length);
+      let randomKey = keys[randomKeyIndex];
+      
+      return randomKey;
+    },
     startBingo() {
-      let newNumber = this.randomCalc(75);
-      while (this.selectedTags.includes(newNumber)) {
-        newNumber = this.randomCalc(75);
+      this.animateNumber(75, 10);
+      if (this.selectedTags.includes(this.defNumber)) {
+        this.animateNumber(10, 10);
       }
-      this.defNumber = newNumber;
-
+    },
+    selectedLetter(){
       let letter = '';
       if (this.defNumber >= 1 && this.defNumber <= 15) {
         letter = 'B';
@@ -40,19 +47,41 @@ export default {
         letter = 'O';
       }
       this.defLetter = letter;
-      this.isNumberSelected(newNumber);
     },
 
     isNumberSelected(number) {
-      if (this.defNumber = number) {
+      if (this.defNumber === number) {
         this.selectedTags.push(number)
+      } else {
+        console.log('error')
       }
     },
 
     isBoardSelected(number) {
       return this.selectedTags.includes(number)
-    }
+    },
 
+    async animateNumber(steps, delay) {
+      let counter = 0;
+
+      const delayAsync = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+      const animate = async () => {
+        if (counter < steps) {
+          this.defNumber = this.randomCalc(steps);
+          this.defLetter = this.randomLetter();
+          counter++;
+          await delayAsync(delay);
+          await animate();
+          this.randomLetter()
+        }
+      };
+
+      await animate();
+      this.selectedLetter();
+      this.newNumber = this.defNumber; // Set the newNumber after animation is complete
+      this.isNumberSelected(this.newNumber);
+    }
   }
 }
 
