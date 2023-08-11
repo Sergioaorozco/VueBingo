@@ -29,9 +29,6 @@ export default {
     },
     startBingo() {
       this.animateNumber(75, 10);
-      if (this.selectedTags.includes(this.defNumber)) {
-        this.animateNumber(10, 10);
-      }
     },
     selectedLetter(){
       let letter = '';
@@ -73,6 +70,9 @@ export default {
           counter++;
           await delayAsync(delay);
           await animate();
+          if (this.selectedTags.includes(this.defNumber)) {
+          await animate();
+          }
           this.randomLetter()
         }
       };
