@@ -18,17 +18,16 @@ export default {
   methods: {
     randomCalc(steps) {
       let item = Math.random() * steps;
-      return Math.floor(item) + 1
+      return Math.floor(item);
     },
     randomLetter() {
       let keys = Object.keys(this.BingoInformation);
       let randomKeyIndex = Math.floor(Math.random() * keys.length);
-      let randomKey = keys[randomKeyIndex];
-      
-      return randomKey;
+      return keys[randomKeyIndex];
     },
     startBingo() {
-      this.animateNumber(75, 10);
+      let finalSteps = this.selectedTags.length;
+      this.animateNumber(finalSteps, 10);
     },
     RestoreBingo(){
       this.selectedTags = [...Array.from({ length: 75 }, (_, index) => index + 1)];
@@ -51,7 +50,7 @@ export default {
 
     isNumberSelected(number) {
       let findNumber = this.selectedTags.indexOf(number)
-      return !this.selectedTags.includes(findNumber) ? this.startBingo() : this.selectedTags.splice(findNumber, 1)
+      return findNumber === this.defNumber ? this.startBingo() : this.selectedTags.splice(findNumber, 1)
     },
 
     isBoardSelected(number) {
@@ -60,17 +59,15 @@ export default {
 
     async animateNumber(steps, delay) {
       let counter = 0;
-
       const delayAsync = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
       const animate = async () => {
-        if (counter < steps) {
-          this.defNumber = this.randomCalc(steps);
+        if (counter < 15) {
+          let numDelay = this.randomCalc(steps);
+          this.defNumber = this.selectedTags[numDelay]
           this.defLetter = this.randomLetter();
           counter++;
           await delayAsync(delay);
           await animate();
-          this.randomLetter()
         }
       };
 
