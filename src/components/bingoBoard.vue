@@ -5,7 +5,7 @@ export default {
       defLetter: 'B',
       defNumber: '0',
       newNumber: null,
-      selectedTags: [],
+      selectedTags: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75],
       BingoInformation: {
         "B": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
         "I": [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
@@ -30,6 +30,9 @@ export default {
     startBingo() {
       this.animateNumber(75, 10);
     },
+    RestoreBingo(){
+      this.selectedTags = [...Array.from({ length: 75 }, (_, index) => index + 1)];
+    },
     selectedLetter(){
       let letter = '';
       if (this.defNumber >= 1 && this.defNumber <= 15) {
@@ -47,15 +50,12 @@ export default {
     },
 
     isNumberSelected(number) {
-      if (this.defNumber === number) {
-        this.selectedTags.push(number)
-      } else {
-        console.log('this number already exists.')
-      }
+      let findNumber = this.selectedTags.indexOf(number)
+      return !this.selectedTags.includes(findNumber) ? this.startBingo() : this.selectedTags.splice(findNumber, 1)
     },
 
     isBoardSelected(number) {
-      return this.selectedTags.includes(number)
+      return !this.selectedTags.includes(number)
     },
 
     async animateNumber(steps, delay) {
@@ -70,9 +70,6 @@ export default {
           counter++;
           await delayAsync(delay);
           await animate();
-          if (this.selectedTags.includes(this.defNumber)) {
-          await animate();
-          }
           this.randomLetter()
         }
       };
@@ -98,9 +95,13 @@ export default {
           <li class="text-7xl font-bold">{{ defLetter }}</li>
           <li class="text-7xl font-bold">{{ defNumber }}</li>
         </ul>
-        <button @click="startBingo"
-          class="bg-amber-500 hover:bg-amber-400 transition-colors duration-300 text-black rounded-lg font-bold px-10 text-2xl py-4">Sortear
-          Números</button>
+        <div class="flex flex-col justify-center md:justify-normal md:flex-row md:gap-x-8 gap-y-4 items-center">
+          <button @click="startBingo"
+            class="bg-amber-500 hover:bg-amber-400 transition-colors duration-300 text-black rounded-lg font-bold px-10 text-2xl py-4 flex-auto" :class="{'ui-disabled': !this.selectedTags.length, 'bg-black/60' : !this.selectedTags.length,  'text-gray-600' : !this.selectedTags.length}">Sortear
+            Números</button>
+            <button @click="RestoreBingo" v-if="!this.selectedTags.length"
+            class="bg-amber-500 hover:bg-amber-400 transition-colors duration-300 text-black rounded-lg font-bold px-10 text-2xl py-4 flex-auto">Refrescar</button>
+        </div>
       </section>
       <section class="mt-10">
         <div class="board">

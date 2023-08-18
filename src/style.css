@@ -31,3 +31,8 @@
   padding-inline: 15px;
   margin: 0 auto;
 }
+
+.ui-disabled {
+  pointer-events: none;
+  opacity: 0.9;
+}
