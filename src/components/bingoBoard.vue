@@ -1,4 +1,5 @@
 <script>
+import confetti from "canvas-confetti";
 export default {
   data() {
     return {
@@ -15,6 +16,9 @@ export default {
       }
     }
   },
+  mounted(){
+    confetti();
+  },
   methods: {
     randomCalc(steps) {
       let item = Math.random() * steps;
@@ -30,6 +34,7 @@ export default {
       this.animateNumber(finalSteps, 10);
     },
     RestoreBingo(){
+      confetti();
       this.selectedTags = [...Array.from({ length: 75 }, (_, index) => index + 1)];
     },
     selectedLetter(){
@@ -47,12 +52,17 @@ export default {
       }
       this.defLetter = letter;
     },
-
     isNumberSelected(number) {
-      let findNumber = this.selectedTags.indexOf(number)
-      return findNumber === this.defNumber ? this.startBingo() : this.selectedTags.splice(findNumber, 1)
+      let findNumber = this.selectedTags.indexOf(number);
+      if (findNumber === this.defNumber) {
+        this.startBingo();
+      } else {
+        this.selectedTags.splice(findNumber, 1);
+        if (this.selectedTags.length === 0) {
+          confetti(); // Trigger confetti when all numbers have been selected
+        }
+      }
     },
-
     isBoardSelected(number) {
       return !this.selectedTags.includes(number)
     },
@@ -61,7 +71,7 @@ export default {
       let counter = 0;
       const delayAsync = (ms) => new Promise(resolve => setTimeout(resolve, ms));
       const animate = async () => {
-        if (counter < 15) {
+        if (counter < 75) {
           let numDelay = this.randomCalc(steps);
           this.defNumber = this.selectedTags[numDelay]
           this.defLetter = this.randomLetter();
